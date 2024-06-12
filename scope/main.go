@@ -20,7 +20,7 @@ func main() {
 	newString := packageone.PublicVar
 	fmt.Println(newString)
 
-	packageone.Exported()
+	packageone.Exported(one, somethingElse)
 }
 
 func myFunc() {
