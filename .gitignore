@@ -22,7 +22,7 @@ go.work
 go.work.sum
 input-aws-s3-bdsl.yaml
 output-aws-s3-bdsl.yaml
-*s3-minio/*
+s3-minio/
 Include/
 Lib/
 Scripts/
