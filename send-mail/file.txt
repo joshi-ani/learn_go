@@ -1,0 +1,5 @@
+Hello,
+
+This is a text file to be attached to a mail.
+
+Thanks !!
