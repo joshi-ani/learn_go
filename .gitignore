@@ -27,3 +27,4 @@ Include/
 Lib/
 Scripts/
 *.cfg
+*.zip
