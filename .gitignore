@@ -28,3 +28,6 @@ Lib/
 Scripts/
 *.cfg
 *.zip
+socket-program-app/
+send-mail/
+*.sh
