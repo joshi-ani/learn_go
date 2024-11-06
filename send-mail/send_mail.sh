@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Variables
-TO=("pankaj.jain@sas.com" "aniruddha.joshi@sas.com")
+TO=(" " " ")
 SUBJECT="Generated report for component performance tests"
 BODY="Please find attached the report for component performance tests."
 ATTACHMENT="file.txt"
-FROM="aniruddha.joshi@sas.com"
+FROM=""
 
 #!/bin/bash
 
 # Variables
-SMTP_SERVER="smtp://mailhost.fyi.sas.com:25"
+SMTP_SERVER=""
 SMTP_USER="your-email@example.com"
 SMTP_PASSWORD="your-email-password"
 # TO="recipient@example.com"
@@ -49,13 +49,13 @@ echo "" >> $email_content
 echo "--frontier--" >> $email_content
 
 # Send email using curl
-curl --url "$SMTP_SERVER" \
+curl -k --url "$SMTP_SERVER" \
      --mail-from "$FROM" \
      $(for RECIPIENT in "${TO_RECIPIENTS[@]}"; do echo "--mail-rcpt $RECIPIENT "; done) \
      --upload-file $email_content \
-     --trace-ascii curl_trace.log \
      --verbose
-    #  --ssl-reqd \
+    #  --trace-ascii curl_trace.log
+    #  --ssl-reqd
     #  --user "$SMTP_USER:$SMTP_PASSWORD"
 
 # Clean up the temporary email file

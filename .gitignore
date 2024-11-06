@@ -30,4 +30,5 @@ Scripts/
 *.zip
 socket-program-app/
 send-mail/
+send_mail.sh
 *.sh
