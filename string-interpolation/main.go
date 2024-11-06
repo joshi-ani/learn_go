@@ -3,9 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/eiannone/keyboard"
 )
 
 var reader *bufio.Reader
@@ -25,18 +28,25 @@ func main() {
 	user.UserName = readString("What is your name?")
 	user.Age = readInt("How old are you?")
 	user.FavouriteNumber = readFloat("What is your favourite number?")
-	user.OwnsADog = readBool("Do you own a dog? (yes/no)")
+	user.OwnsADog = readBool("Do you own a dog? (y/n)")
 	// userName := readString("What is your name?")
 	// age := readInt("How old are you?")
 	// fmt.Println("Your name is: "+userName+". You are", age, "years old.")  # First way of printing
 	// fmt.Println(fmt.Sprintf("Your name is %s. You are %d years old", userName, age)) # Second way of printing
 
 	// fmt.Printf("Your name is %s. You are %d years old", userName, age) // Third way of printing
-	fmt.Printf("Your name is %s. You are %d years old. Your favourite number is %.4f. %v you own a dog.",
-		user.UserName,
-		user.Age,
-		user.FavouriteNumber,
-		user.OwnsADog)
+	if user.OwnsADog {
+		fmt.Printf("Your name is %s. You are %d years old. Your favourite number is %.4f. You own a dog.",
+			user.UserName,
+			user.Age,
+			user.FavouriteNumber)
+	} else {
+		fmt.Printf("Your name is %s. You are %d years old. Your favourite number is %.4f. You don't own a dog.",
+			user.UserName,
+			user.Age,
+			user.FavouriteNumber)
+	}
+
 }
 
 func prompt() {
@@ -99,16 +109,39 @@ func readFloat(s string) float64 {
 }
 
 func readBool(s string) bool {
-	fmt.Println(s)
-	prompt()
+	// fmt.Println(s)
 
-	userInput, _ := reader.ReadString('\n')
-	userInput = replaceCarriageReturns(userInput)
-	var isTrue bool
-	if strings.ToLower(userInput) == "yes" {
-		isTrue = true
-	} else {
-		isTrue = false
+	err := keyboard.Open()
+	if err != nil {
+		log.Fatal(err)
 	}
-	return isTrue
+
+	defer func() {
+		_ = keyboard.Close()
+	}()
+
+	for {
+		fmt.Println(s)
+		prompt()
+		char, _, err := keyboard.GetSingleKey()
+		if err != nil {
+			log.Fatal(err)
+		}
+		if strings.ToLower(string(char)) != "y" && strings.ToLower(string(char)) != "n" {
+			fmt.Println("Please type y or n")
+		} else if char == 'n' || char == 'N' {
+			return false
+		} else if char == 'y' || char == 'Y' {
+			return true
+		}
+	}
+	// userInput, _ := reader.ReadString('\n')
+	// userInput = replaceCarriageReturns(userInput)
+	// var isTrue bool
+	// if strings.ToLower(userInput) == "y" {
+	// 	isTrue = true
+	// } else {
+	// 	isTrue = false
+	// }
+	// return isTrue
 }
