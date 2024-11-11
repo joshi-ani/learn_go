@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 // Slices
 
@@ -32,4 +35,25 @@ func main() {
 
 	// Print first two elements
 	fmt.Println("First two elements are: ", animals[0:2])
+
+	// Print length of the slice
+	fmt.Println("The slice is: ", len(animals), " elements long")
+
+	// Check if slice is sorted
+	fmt.Println("Is is sorted?", sort.StringsAreSorted(animals))
+
+	// If not sorted then sort the slice
+	sort.Strings(animals)
+	fmt.Println("Is is sorted now?", sort.StringsAreSorted(animals))
+	fmt.Println(animals)
+
+	animals = DeleteFromSlice(animals, 1)
+	fmt.Println(animals)
+}
+
+func DeleteFromSlice(a []string, i int) []string {
+	a[i] = a[len(a)-1]
+	a[len(a)-1] = ""
+	a = a[:len(a)-1]
+	return a
 }
