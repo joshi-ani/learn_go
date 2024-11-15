@@ -42,7 +42,10 @@ func main() {
 }
 
 func listenForKeyPress() {
-
+	for {
+		key := <-keyPressChan
+		fmt.Println("You pressed", string(key))
+	}
 }
 
 // func doSomething(s string) {
